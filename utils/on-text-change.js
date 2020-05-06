@@ -1,0 +1,1 @@
+export default (setter) => ({ target: { value } }) => setter(value);

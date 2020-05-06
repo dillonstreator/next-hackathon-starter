@@ -1,0 +1,15 @@
+html,
+body {
+	font-family: Montserrat;
+}
+
+#__next {
+	flex: auto;
+	display: flex;
+}
+
+.input-group {
+	display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+}
