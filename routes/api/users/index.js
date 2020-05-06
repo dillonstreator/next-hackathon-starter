@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { validationResult, check } = require("express-validator");
 const _ = require("lodash");
-const uuid = require("uuid/v4");
+const uuid = require("uuid");
 const moment = require("moment");
 const logger = require("../../../utils/logger");
 const User = require("../../../db/models/User");
@@ -41,7 +41,7 @@ router.post(
 				return res.status(200).json({ message: emailSentMessage });
 			}
 
-			const emailVerificationToken = uuid();
+			const emailVerificationToken = uuid.v4();
 			await User.create({
 				email,
 				password,
@@ -95,7 +95,7 @@ router.post(
 				return res.status(200).json({ message: emailSentMessageParanoid });
 			}
 
-			const emailVerificationToken = uuid();
+			const emailVerificationToken = uuid.v4();
 			user.emailVerificationToken = emailVerificationToken;
 			await user.save();
 
@@ -168,7 +168,7 @@ router.post(
 				return res.status(200).json({ message: emailSentMessageParanoid });
 			}
 
-			const passwordResetToken = uuid();
+			const passwordResetToken = uuid.v4();
 			const passwordResetExpires = moment().add(30, "minutes");
 			user.passwordResetToken = passwordResetToken;
 			user.passwordResetExpires = passwordResetExpires;

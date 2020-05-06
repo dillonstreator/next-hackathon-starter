@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 
-export default function privateRoute(
-	WrappedComponent,
-	{
-		isAllowed = ({ req }) => req.isAuthenticated(),
-		redirectTo = "/account/login",
-	}
-) {
+export default function privateRoute(WrappedComponent) {
 	return class extends Component {
 		static async getInitialProps(ctx) {
-			const { res } = ctx;
-			if (!isAllowed(ctx)) {
-				res.redirect(redirectTo);
+			const { res, req } = ctx;
+			if (!req.isAuthenticated()) {
+				res.redirect("/account/login");
 				return;
 			}
 
