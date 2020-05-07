@@ -15,4 +15,5 @@ This app relies of a few configurable environment variables.
 - DATABASE_URL
 - SENDGRID_API_KEY
 - BASE_URL
+
 create a .env file in the root path of the project and add the above environment variables
