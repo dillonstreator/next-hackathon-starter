@@ -6,7 +6,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const defaultFrom = "support@email.com";
 const send = async ({ from = defaultFrom, to, subject, text, html }) => {
 	logger.info(`Sending subject ${subject} to ${to}`);
-	sgMail.send({
+	return sgMail.send({
 		from,
 		to,
 		subject,
@@ -31,21 +31,21 @@ module.exports = {
 			subject: "Attempted account creation? Need email verification",
 			text: `An attempt was made to create an account using your email but an account already exists. If you need another verification email, click TODO ${process.env.BASE_URL}/account/verify?email=${email}. If this request was not made by you, please ignore this email.`,
 		}),
-	SendEmailVerification: ({ email, token }) =>
+	sendEmailVerification: ({ email, token }) =>
 		send({
 			to: email,
 			from: "...",
 			subject: "Email Confirmation",
 			text: `To confirm creation of your account, please click here ${process.env.BASE_URL}/account/verify/${token}`,
 		}),
-	SendEmailVerificationAlreadyVerified: ({ email }) =>
+	sendEmailVerificationAlreadyVerified: ({ email }) =>
 		send({
 			to: email,
 			from: "...",
 			subject: "Email Confirmation | Already Verified",
 			text: `An email verification link was request for this email address but your email has already been verified. If this request was not made by you, please ignore this email.`,
 		}),
-	SendPasswordReset: ({ email, token, expires }) =>
+	sendPasswordReset: ({ email, token, expires }) =>
 		send({
 			to: email,
 			from: "...",

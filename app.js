@@ -48,11 +48,6 @@ app.prepare().then(() => {
 	server.use(passport.initialize());
 	server.use(passport.session());
 
-	server.use((req, res, n) => {
-		res.nextApp = app;
-		n();
-	});
-
 	server.use(require("./routes"));
 
 	server.get("*", app.getRequestHandler());

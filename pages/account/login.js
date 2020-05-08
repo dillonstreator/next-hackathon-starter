@@ -9,7 +9,8 @@ const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	const postLogin = async () => {
+	const postLogin = async (e) => {
+		e.preventDefault();
 		try {
 			const res = await api.POST("/api/sessions", {
 				data: { email, password },

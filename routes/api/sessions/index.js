@@ -10,7 +10,10 @@ router.get("/", (req, res) => {
 
 router.post(
 	"/",
-	[check("email").isEmail().withMessage("email is not in valid format"), check("password").notEmpty().withMessage("password is required")],
+	[
+		check("email").isEmail().withMessage("email is not in valid format"),
+		check("password").notEmpty().withMessage("password is required"),
+	],
 	(req, res, next) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
@@ -37,10 +40,10 @@ router.post(
 );
 
 router.delete("/", (req, res) => {
-    req.logout();
+	req.logout();
 	req.session.destroy((err) => {
 		req.user = null;
-		return res.nextApp.render(req, res, "/account/login");
+		return res.sendStatus(200);
 	});
 });
 

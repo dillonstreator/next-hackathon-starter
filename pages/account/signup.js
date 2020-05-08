@@ -10,7 +10,8 @@ const Signup = () => {
 	const [password, setPassword] = useState("");
 	const [passwordConfirm, setPasswordConfirm] = useState("");
 
-	const postSignup = async () => {
+	const postSignup = async (e) => {
+		e.preventDefault();
 		try {
 			const res = await api.POST("/api/users", {
 				data: { email, password, passwordConfirm },
@@ -67,7 +68,7 @@ const Signup = () => {
 					/>
 				</div>
 				<button onClick={postSignup}>Signup</button>{" "}
-				or <Link href="/account/login">login</Link>
+				or <Link href="/account/login"><a>login</a></Link>
 			</form>
 		</div>
 	);

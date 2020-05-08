@@ -8,7 +8,8 @@ const Verify = () => {
 	const router = useRouter();
 	const [email, setEmail] = useState("");
 
-	const sendLink = async () => {
+	const sendLink = async (e) => {
+		e.preventDefault();
 		try {
 			const res = await api.POST("/api/users/verify", {
 				data: { email },

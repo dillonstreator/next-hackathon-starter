@@ -8,7 +8,8 @@ const Reset = () => {
 	const router = useRouter();
 	const [password, setPassword] = useState("");
 
-	const resetPassword = async () => {
+	const resetPassword = async (e) => {
+		e.preventDefault();
 		try {
 			const { token } = router.query;
 			const res = await api.POST(`/api/users/reset/${token}`, {

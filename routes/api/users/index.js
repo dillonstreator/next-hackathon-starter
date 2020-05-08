@@ -48,7 +48,7 @@ router.post(
 				emailVerificationToken,
 			});
 
-			await mailer.sendAccountCreationConfirmation({
+			mailer.sendEmailVerification({
 				email,
 				token: emailVerificationToken,
 			});
@@ -91,7 +91,7 @@ router.post(
 				return res.status(200).json({ message: emailSentMessageParanoid });
 			}
 			if (user.emailVerified) {
-				mailer.SendEmailVerificationAlreadyVerified({ email });
+				mailer.sendEmailVerificationAlreadyVerified({ email });
 				return res.status(200).json({ message: emailSentMessageParanoid });
 			}
 
@@ -99,7 +99,7 @@ router.post(
 			user.emailVerificationToken = emailVerificationToken;
 			await user.save();
 
-			mailer.SendEmailVerification({
+			mailer.sendEmailVerification({
 				email,
 				token: emailVerificationToken,
 			});
@@ -174,7 +174,7 @@ router.post(
 			user.passwordResetExpires = passwordResetExpires;
 			await user.save();
 
-			mailer.SendPasswordReset({
+			mailer.sendPasswordReset({
 				email,
 				token: passwordResetToken,
 				expires: passwordResetExpires,

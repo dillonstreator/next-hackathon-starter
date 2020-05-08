@@ -7,7 +7,8 @@ import api, { snackFromError } from "../../utils/api";
 const Forgot = () => {
 	const [email, setEmail] = useState("");
 
-	const sendLink = async () => {
+	const sendLink = async (e) => {
+		e.preventDefault();
 		try {
 			const res = await api.POST("/api/users/forgot", {
 				data: { email },
