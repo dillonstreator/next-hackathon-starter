@@ -11,7 +11,7 @@ const { normalizeEmail } = require("../../../utils/normalizer");
 router.post(
 	"/",
 	[
-		check("email").isEmail().withMessage("email is not in valid format"),
+		check("email").isEmail().withMessage("email has invalid format"),
 		check("password")
 			.isLength({ min: 8 })
 			.withMessage("password must be 8 characters minimum"),
@@ -72,7 +72,7 @@ router.post(
 			.notEmpty()
 			.withMessage("email is required")
 			.isEmail()
-			.withMessage("email is not in valid format"),
+			.withMessage("email has invalid format"),
 	],
 	async (req, res) => {
 		const errors = validationResult(req);
@@ -149,7 +149,7 @@ router.post(
 			.notEmpty()
 			.withMessage("email is required")
 			.isEmail()
-			.withMessage("email is not in valid format"),
+			.withMessage("email has invalid format"),
 	],
 	async (req, res) => {
 		const errors = validationResult(req);

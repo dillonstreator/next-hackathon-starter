@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 router.post(
 	"/",
 	[
-		check("email").isEmail().withMessage("email is not in valid format"),
+		check("email").isEmail().withMessage("email has invalid format"),
 		check("password").notEmpty().withMessage("password is required"),
 	],
 	(req, res, next) => {
