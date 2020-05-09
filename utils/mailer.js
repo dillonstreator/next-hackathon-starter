@@ -22,14 +22,14 @@ module.exports = {
 			from: "...",
 			subject: "Attempted account creation?",
 			text:
-				"An attempt was made to create an account using your email but an account already exists. If you have forgotten your account info, click here to reset your password. If this request was not made by you, please ignore this email.",
+				`An attempt was made to create an account using your email but an account already exists. If you have forgotten your account info, click ${process.env.BASE_URL}/forgot?email=${email} to request a link to reset your password. If this request was not made by you, please ignore this email.`,
 		}),
 	sendDuplicateAccountCreationNeedsVerification: ({ email }) =>
 		send({
 			to: email,
 			from: "...",
 			subject: "Attempted account creation? Need email verification",
-			text: `An attempt was made to create an account using your email but an account already exists. If you need another verification email, click TODO ${process.env.BASE_URL}/account/verify?email=${email}. If this request was not made by you, please ignore this email.`,
+			text: `An attempt was made to create an account using your email but an account already exists. If you need another verification email, click ${process.env.BASE_URL}/account/verify?email=${email}. If this request was not made by you, please ignore this email.`,
 		}),
 	sendEmailVerification: ({ email, token }) =>
 		send({

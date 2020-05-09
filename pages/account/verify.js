@@ -6,7 +6,7 @@ import api, { snackFromError } from "../../utils/api";
 
 const Verify = () => {
 	const router = useRouter();
-	const [email, setEmail] = useState("");
+	const [email, setEmail] = useState(router.query.email || "");
 
 	const sendLink = async (e) => {
 		e.preventDefault();

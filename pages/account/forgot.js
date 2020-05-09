@@ -5,7 +5,8 @@ import onTextChange from "../../utils/on-text-change";
 import api, { snackFromError } from "../../utils/api";
 
 const Forgot = () => {
-	const [email, setEmail] = useState("");
+	const router = useRouter();
+	const [email, setEmail] = useState(router.query.email || "");
 
 	const sendLink = async (e) => {
 		e.preventDefault();
