@@ -15,7 +15,7 @@ export default {
 	DELETE: makeRequest("DELETE"),
 };
 
-export const snackFromError = (error) => {
+export const messageFromError = (error) => {
 	let message = "";
 	let data = _get(error, "response.data", {});
 	data = { errors: [], message: "There was an issue", ...data };

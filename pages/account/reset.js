@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { useState } from "react";
 import onTextChange from "../../utils/on-text-change";
-import api, { snackFromError } from "../../utils/api";
+import api, { messageFromError } from "../../utils/api";
 
 const Reset = () => {
 	const router = useRouter();
@@ -18,7 +18,7 @@ const Reset = () => {
 
 			alert(res.data.message);
 		} catch (error) {
-			alert(snackFromError(error));
+			alert(messageFromError(error));
 		}
 	};
 

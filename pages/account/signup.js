@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import api, { snackFromError } from "../../utils/api";
+import api, { messageFromError } from "../../utils/api";
 import onTextChange from "../../utils/on-text-change";
 
 const Signup = () => {
@@ -20,7 +20,7 @@ const Signup = () => {
 			alert(res.data.message);
 			router.push("/account/login");
 		} catch (error) {
-			const message = snackFromError(error);
+			const message = messageFromError(error);
 			alert(message);
 		} finally {
 			setEmail("");
