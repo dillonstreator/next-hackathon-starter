@@ -19,7 +19,6 @@ module.exports = {
 	sendDuplicateAccountCreation: ({ email }) =>
 		send({
 			to: email,
-			from: "...",
 			subject: "Attempted account creation?",
 			text:
 				`An attempt was made to create an account using your email but an account already exists. If you have forgotten your account info, click ${process.env.BASE_URL}/forgot?email=${email} to request a link to reset your password. If this request was not made by you, please ignore this email.`,
@@ -27,28 +26,24 @@ module.exports = {
 	sendDuplicateAccountCreationNeedsVerification: ({ email }) =>
 		send({
 			to: email,
-			from: "...",
 			subject: "Attempted account creation? Need email verification",
 			text: `An attempt was made to create an account using your email but an account already exists. If you need another verification email, click ${process.env.BASE_URL}/account/verify?email=${email}. If this request was not made by you, please ignore this email.`,
 		}),
 	sendEmailVerification: ({ email, token }) =>
 		send({
 			to: email,
-			from: "...",
 			subject: "Email Confirmation",
 			text: `To confirm creation of your account, please click here ${process.env.BASE_URL}/account/verify/${token}`,
 		}),
 	sendEmailVerificationAlreadyVerified: ({ email }) =>
 		send({
 			to: email,
-			from: "...",
 			subject: "Email Confirmation | Already Verified",
 			text: `An email verification link was request for this email address but your email has already been verified. If this request was not made by you, please ignore this email.`,
 		}),
 	sendPasswordReset: ({ email, token, expires }) =>
 		send({
 			to: email,
-			from: "...",
 			subject: "Password Reset",
 			text: `Here is a link to reset your password ${
 				process.env.BASE_URL
