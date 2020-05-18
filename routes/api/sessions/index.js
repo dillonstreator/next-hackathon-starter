@@ -1,7 +1,8 @@
 const router = require("express").Router();
-const { validationResult, check } = require("express-validator");
+const { check } = require("express-validator");
 const passport = require("passport");
 const logger = require("../../../utils/logger");
+const validateChecks = require("../../../middlewares/validate-checks");
 
 router.get("/", (req, res) => {
 	if (req.isAuthenticated()) return res.sendStatus(200);
@@ -14,12 +15,8 @@ router.post(
 		check("email").isEmail().withMessage("email has invalid format"),
 		check("password").notEmpty().withMessage("password is required"),
 	],
+	validateChecks,
 	(req, res, next) => {
-		const errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: errors.array() });
-		}
-
 		passport.authenticate("local", (err, user, info) => {
 			if (err) return res.status(400).json(info);
 			if (!user) return res.status(400).json(info);

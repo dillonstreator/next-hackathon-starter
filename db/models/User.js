@@ -30,6 +30,16 @@ userSchema.pre("save", async function (next) {
 	}
 });
 
+userSchema.pre("save", function(next) {
+	if (!this.profile) this.profile = {};
+
+	if (!this.profile.name) this.profile.name = this.email.split("@")[0];
+	if (!this.profile.picture) this.profile.picture = User.gravatar({ email: this.email });
+
+	next();
+});
+
+
 userSchema.methods.basicInfoCompleted = function () {
 	try {
 		return this.emailVerified && this.profile.name;
@@ -40,6 +50,13 @@ userSchema.methods.basicInfoCompleted = function () {
 
 userSchema.methods.comparePassword = function (incoming) {
 	return bcrypt.compare(incoming, this.password);
+};
+
+userSchema.statics.gravatar = function gravatar({ size = 200, email } = {}) {
+	if (!email) return `https://gravatar.com/avatar/?s=${size}&d=retro`;
+
+	const md5 = crypto.createHash("md5").update(email).digest("hex");
+	return `https://gravatar.com/avatar/${md5}?s=${size}&d=retro`;
 };
 
 const User = mongoose.model("User", userSchema);

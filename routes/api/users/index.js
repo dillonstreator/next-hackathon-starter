@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const { validationResult, check } = require("express-validator");
+const { check } = require("express-validator");
+const rateLimit = require("express-rate-limit");
 const _ = require("lodash");
 const uuid = require("uuid");
 const moment = require("moment");
@@ -7,6 +8,12 @@ const logger = require("../../../utils/logger");
 const User = require("../../../db/models/User");
 const mailer = require("../../../utils/mailer");
 const { normalizeEmail } = require("../../../utils/normalizer");
+const validateChecks = require("../../../middlewares/validate-checks");
+
+const apiLimiter = rateLimit({
+	windowMs: 1000 * 60 * 15,
+	max: 100,
+});
 
 router.post(
 	"/",
@@ -22,12 +29,13 @@ router.post(
 			return true;
 		}),
 	],
+	validateChecks,
+	rateLimit({
+		windowMs: 1000 * 60 * 60,
+		max: 10,
+		message: "Too many accounts created, please try again in an hour.",
+	}),
 	async (req, res) => {
-		const errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: errors.array() });
-		}
-
 		const { email: rawEmail, password } = req.body;
 		const email = normalizeEmail(rawEmail);
 
@@ -74,12 +82,9 @@ router.post(
 			.isEmail()
 			.withMessage("email has invalid format"),
 	],
+	validateChecks,
+	apiLimiter,
 	async (req, res) => {
-		const errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: errors.array() });
-		}
-
 		const { email: rawEmail } = req.body;
 		const email = normalizeEmail(rawEmail);
 
@@ -116,7 +121,7 @@ router.post(
 );
 
 // verify account/email
-router.get("/verify/:token", async (req, res) => {
+router.get("/verify/:token", apiLimiter, async (req, res) => {
 	try {
 		const emailVerificationToken = req.params.token;
 		const user = await User.findOne({
@@ -151,12 +156,9 @@ router.post(
 			.isEmail()
 			.withMessage("email has invalid format"),
 	],
+	validateChecks,
+	apiLimiter,
 	async (req, res) => {
-		const errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: errors.array() });
-		}
-
 		const { email: rawEmail } = req.body;
 		const email = normalizeEmail(rawEmail);
 
@@ -198,12 +200,9 @@ router.post(
 			.isLength({ min: 8 })
 			.withMessage("password must be 8 characters minimum"),
 	],
+	validateChecks,
+	apiLimiter,
 	async (req, res) => {
-		const errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			return res.status(400).json({ errors: errors.array() });
-		}
-
 		const { token } = req.params;
 		const { password } = req.body;
 
