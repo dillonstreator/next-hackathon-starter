@@ -8,7 +8,7 @@ const logger = require("../../../utils/logger");
 const User = require("../../../db/models/User");
 const mailer = require("../../../utils/mailer");
 const { normalizeEmail } = require("../../../utils/normalizer");
-const validateChecks = require("../../../middlewares/validate-checks");
+const validateChecks = require("../../../middlewares/validate-checks")();
 
 const apiLimiter = rateLimit({
 	windowMs: 1000 * 60 * 15,
