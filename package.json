@@ -30,7 +30,7 @@
 		"moment": "^2.24.0",
 		"mongoose": "^5.9.11",
 		"morgan": "^1.9.1",
-		"next": "^9.3.6",
+		"next": "^11.1.0",
 		"passport": "^0.4.1",
 		"passport-local": "^1.0.0",
 		"react": "^16.13.1",
