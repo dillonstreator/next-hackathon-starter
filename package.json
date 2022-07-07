@@ -27,7 +27,7 @@
 		"express-validator": "^6.4.0",
 		"helmet": "^3.22.0",
 		"lodash": "^4.17.15",
-		"moment": "^2.24.0",
+		"moment": "^2.29.4",
 		"mongoose": "^5.9.11",
 		"morgan": "^1.9.1",
 		"next": "^9.3.6",
